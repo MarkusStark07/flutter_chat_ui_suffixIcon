@@ -139,6 +139,10 @@ class Composer extends StatefulWidget {
   /// Configuration for content insertion (e.g., images, gifs, stickers) into the text field.
   final ContentInsertionConfiguration? contentInsertionConfiguration;
 
+  /// IconButton widget placed at the suffixIcon of the TextField
+  /// Can be used to implement additional features like speech-to-text or others.
+  final IconButton? textFieldSuffixIconButton;
+
   /// Creates a message composer widget.
   const Composer({
     super.key,
@@ -184,6 +188,7 @@ class Composer extends StatefulWidget {
     this.sendButtonHidden = false,
     this.inputClearMode = InputClearMode.always,
     this.contentInsertionConfiguration,
+    this.textFieldSuffixIconButton,
   });
 
   @override
@@ -313,6 +318,13 @@ class _ComposerState extends State<Composer> {
                           widget.inputFillColor ??
                           theme.surfaceContainerHigh.withValues(alpha: 0.8),
                       hoverColor: Colors.transparent,
+                      suffixIcon: widget.textFieldSuffixIconButton != null
+                          ? StatefulBuilder(
+                          builder: (context, setState) {
+                            return widget.textFieldSuffixIconButton!;
+                          }
+                      )
+                          : null,
                     ),
                     style: theme.bodyMedium.copyWith(
                       color: widget.textColor ?? theme.onSurface,
